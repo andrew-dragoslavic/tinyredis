@@ -1,0 +1,138 @@
+Start testing: Sep 08 00:26 EDT
+----------------------------------------------------------
+1/5 Testing: KVStore.SetGetDelBasics
+1/5 Test: KVStore.SetGetDelBasics
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=KVStore.SetGetDelBasics" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"KVStore.SetGetDelBasics" start time: Sep 08 00:26 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = KVStore.SetGetDelBasics
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from KVStore
+[ RUN      ] KVStore.SetGetDelBasics
+[       OK ] KVStore.SetGetDelBasics (0 ms)
+[----------] 1 test from KVStore (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"KVStore.SetGetDelBasics" end time: Sep 08 00:26 EDT
+"KVStore.SetGetDelBasics" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/5 Testing: Repl.ParseLine_BasicWhitespace
+2/5 Test: Repl.ParseLine_BasicWhitespace
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=Repl.ParseLine_BasicWhitespace" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"Repl.ParseLine_BasicWhitespace" start time: Sep 08 00:26 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = Repl.ParseLine_BasicWhitespace
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from Repl
+[ RUN      ] Repl.ParseLine_BasicWhitespace
+[       OK ] Repl.ParseLine_BasicWhitespace (0 ms)
+[----------] 1 test from Repl (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"Repl.ParseLine_BasicWhitespace" end time: Sep 08 00:26 EDT
+"Repl.ParseLine_BasicWhitespace" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/5 Testing: ReplEval.FullWorkflow
+3/5 Test: ReplEval.FullWorkflow
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=ReplEval.FullWorkflow" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"ReplEval.FullWorkflow" start time: Sep 08 00:26 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = ReplEval.FullWorkflow
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ReplEval
+[ RUN      ] ReplEval.FullWorkflow
+[       OK ] ReplEval.FullWorkflow (0 ms)
+[----------] 1 test from ReplEval (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"ReplEval.FullWorkflow" end time: Sep 08 00:26 EDT
+"ReplEval.FullWorkflow" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/5 Testing: ReplEval.UnknownCommand
+4/5 Test: ReplEval.UnknownCommand
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=ReplEval.UnknownCommand" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"ReplEval.UnknownCommand" start time: Sep 08 00:26 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = ReplEval.UnknownCommand
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ReplEval
+[ RUN      ] ReplEval.UnknownCommand
+[       OK ] ReplEval.UnknownCommand (0 ms)
+[----------] 1 test from ReplEval (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"ReplEval.UnknownCommand" end time: Sep 08 00:26 EDT
+"ReplEval.UnknownCommand" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/5 Testing: ReplEval.DelCommand_WrongArgs
+5/5 Test: ReplEval.DelCommand_WrongArgs
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=ReplEval.DelCommand_WrongArgs" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"ReplEval.DelCommand_WrongArgs" start time: Sep 08 00:26 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = ReplEval.DelCommand_WrongArgs
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ReplEval
+[ RUN      ] ReplEval.DelCommand_WrongArgs
+[       OK ] ReplEval.DelCommand_WrongArgs (0 ms)
+[----------] 1 test from ReplEval (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"ReplEval.DelCommand_WrongArgs" end time: Sep 08 00:26 EDT
+"ReplEval.DelCommand_WrongArgs" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 08 00:26 EDT

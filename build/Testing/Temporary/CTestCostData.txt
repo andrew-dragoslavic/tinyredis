@@ -1,0 +1,6 @@
+KVStore.SetGetDelBasics 5 0.00047575
+Repl.ParseLine_BasicWhitespace 3 0.000803375
+ReplEval.FullWorkflow 2 0.00134521
+ReplEval.UnknownCommand 1 0.00225913
+ReplEval.DelCommand_WrongArgs 1 0.00217579
+---

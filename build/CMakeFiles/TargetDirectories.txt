@@ -1,0 +1,7 @@
+/Users/andrewdragoslavic/tinyredis/build/CMakeFiles/kvstore.dir
+/Users/andrewdragoslavic/tinyredis/build/CMakeFiles/kvstore_tests.dir
+/Users/andrewdragoslavic/tinyredis/build/CMakeFiles/tinyredis.dir
+/Users/andrewdragoslavic/tinyredis/build/CMakeFiles/tinyredis_server.dir
+/Users/andrewdragoslavic/tinyredis/build/CMakeFiles/test.dir
+/Users/andrewdragoslavic/tinyredis/build/CMakeFiles/edit_cache.dir
+/Users/andrewdragoslavic/tinyredis/build/CMakeFiles/rebuild_cache.dir

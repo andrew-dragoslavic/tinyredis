@@ -1,0 +1,38 @@
+[
+{
+  "directory": "/Users/andrewdragoslavic/tinyredis/build",
+  "command": "/usr/bin/c++  -I/Users/andrewdragoslavic/tinyredis/include -std=gnu++20 -arch arm64 -o CMakeFiles/kvstore.dir/src/kvstore.cpp.o -c /Users/andrewdragoslavic/tinyredis/src/kvstore.cpp",
+  "file": "/Users/andrewdragoslavic/tinyredis/src/kvstore.cpp",
+  "output": "CMakeFiles/kvstore.dir/src/kvstore.cpp.o"
+},
+{
+  "directory": "/Users/andrewdragoslavic/tinyredis/build",
+  "command": "/usr/bin/c++  -I/Users/andrewdragoslavic/tinyredis/include -std=gnu++20 -arch arm64 -o CMakeFiles/kvstore.dir/src/repl.cpp.o -c /Users/andrewdragoslavic/tinyredis/src/repl.cpp",
+  "file": "/Users/andrewdragoslavic/tinyredis/src/repl.cpp",
+  "output": "CMakeFiles/kvstore.dir/src/repl.cpp.o"
+},
+{
+  "directory": "/Users/andrewdragoslavic/tinyredis/build",
+  "command": "/usr/bin/c++  -I/Users/andrewdragoslavic/tinyredis/include -isystem /opt/homebrew/include -std=gnu++20 -arch arm64 -o CMakeFiles/kvstore_tests.dir/tests/kvstore_tests.cpp.o -c /Users/andrewdragoslavic/tinyredis/tests/kvstore_tests.cpp",
+  "file": "/Users/andrewdragoslavic/tinyredis/tests/kvstore_tests.cpp",
+  "output": "CMakeFiles/kvstore_tests.dir/tests/kvstore_tests.cpp.o"
+},
+{
+  "directory": "/Users/andrewdragoslavic/tinyredis/build",
+  "command": "/usr/bin/c++  -I/Users/andrewdragoslavic/tinyredis/include -std=gnu++20 -arch arm64 -o CMakeFiles/tinyredis.dir/src/main.cpp.o -c /Users/andrewdragoslavic/tinyredis/src/main.cpp",
+  "file": "/Users/andrewdragoslavic/tinyredis/src/main.cpp",
+  "output": "CMakeFiles/tinyredis.dir/src/main.cpp.o"
+},
+{
+  "directory": "/Users/andrewdragoslavic/tinyredis/build",
+  "command": "/usr/bin/c++  -I/Users/andrewdragoslavic/tinyredis/include -std=gnu++20 -arch arm64 -o CMakeFiles/tinyredis_server.dir/src/server_main.cpp.o -c /Users/andrewdragoslavic/tinyredis/src/server_main.cpp",
+  "file": "/Users/andrewdragoslavic/tinyredis/src/server_main.cpp",
+  "output": "CMakeFiles/tinyredis_server.dir/src/server_main.cpp.o"
+},
+{
+  "directory": "/Users/andrewdragoslavic/tinyredis/build",
+  "command": "/usr/bin/c++  -I/Users/andrewdragoslavic/tinyredis/include -std=gnu++20 -arch arm64 -o CMakeFiles/tinyredis_server.dir/src/server.cpp.o -c /Users/andrewdragoslavic/tinyredis/src/server.cpp",
+  "file": "/Users/andrewdragoslavic/tinyredis/src/server.cpp",
+  "output": "CMakeFiles/tinyredis_server.dir/src/server.cpp.o"
+}
+]

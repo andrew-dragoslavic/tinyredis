@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/andrewdragoslavic/tinyredis/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

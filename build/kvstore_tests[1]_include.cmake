@@ -1,0 +1,5 @@
+if(EXISTS "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests[1]_tests.cmake")
+  include("/Users/andrewdragoslavic/tinyredis/build/kvstore_tests[1]_tests.cmake")
+else()
+  add_test(kvstore_tests_NOT_BUILT kvstore_tests_NOT_BUILT)
+endif()
