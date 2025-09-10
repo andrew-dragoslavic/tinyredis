@@ -6,9 +6,13 @@
 #include <unistd.h>
 #include <cerrno>
 #include <cstring>
+#include <csignal>
 
 namespace tr
 {
+
+    static constexpr std::size_t MAX_LINE = 1024 * 1024;
+
     bool write_all(int fd, const std::string &s)
     {
         size_t length = s.length();
@@ -95,6 +99,11 @@ namespace tr
                         }
                     }
                 }
+                if (inbuf.size() > MAX_LINE)
+                {
+                    ::close(client_fd);
+                    return;
+                }
             }
             else if (n == 0)
             {
@@ -119,6 +128,7 @@ namespace tr
 
     int run_server(const uint16_t port)
     {
+        ::signal(SIGPIPE, SIG_IGN);
         int listen_fd = ::socket(AF_INET, SOCK_STREAM, 0); // Creates a new socket for IPv4
         int yes = 1;
         if (listen_fd < 0)
