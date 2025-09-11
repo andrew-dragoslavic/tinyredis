@@ -1,10 +1,10 @@
-Start testing: Sep 08 00:26 EDT
+Start testing: Sep 11 15:07 EDT
 ----------------------------------------------------------
-1/5 Testing: KVStore.SetGetDelBasics
-1/5 Test: KVStore.SetGetDelBasics
+1/12 Testing: KVStore.SetGetDelBasics
+1/12 Test: KVStore.SetGetDelBasics
 Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=KVStore.SetGetDelBasics" "--gtest_also_run_disabled_tests"
 Directory: /Users/andrewdragoslavic/tinyredis/build
-"KVStore.SetGetDelBasics" start time: Sep 08 00:26 EDT
+"KVStore.SetGetDelBasics" start time: Sep 11 15:07 EDT
 Output:
 ----------------------------------------------------------
 Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
@@ -23,15 +23,15 @@ Note: Google Test filter = KVStore.SetGetDelBasics
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"KVStore.SetGetDelBasics" end time: Sep 08 00:26 EDT
+"KVStore.SetGetDelBasics" end time: Sep 11 15:07 EDT
 "KVStore.SetGetDelBasics" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-2/5 Testing: Repl.ParseLine_BasicWhitespace
-2/5 Test: Repl.ParseLine_BasicWhitespace
+2/12 Testing: Repl.ParseLine_BasicWhitespace
+2/12 Test: Repl.ParseLine_BasicWhitespace
 Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=Repl.ParseLine_BasicWhitespace" "--gtest_also_run_disabled_tests"
 Directory: /Users/andrewdragoslavic/tinyredis/build
-"Repl.ParseLine_BasicWhitespace" start time: Sep 08 00:26 EDT
+"Repl.ParseLine_BasicWhitespace" start time: Sep 11 15:07 EDT
 Output:
 ----------------------------------------------------------
 Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
@@ -50,15 +50,15 @@ Note: Google Test filter = Repl.ParseLine_BasicWhitespace
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"Repl.ParseLine_BasicWhitespace" end time: Sep 08 00:26 EDT
+"Repl.ParseLine_BasicWhitespace" end time: Sep 11 15:07 EDT
 "Repl.ParseLine_BasicWhitespace" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-3/5 Testing: ReplEval.FullWorkflow
-3/5 Test: ReplEval.FullWorkflow
+3/12 Testing: ReplEval.FullWorkflow
+3/12 Test: ReplEval.FullWorkflow
 Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=ReplEval.FullWorkflow" "--gtest_also_run_disabled_tests"
 Directory: /Users/andrewdragoslavic/tinyredis/build
-"ReplEval.FullWorkflow" start time: Sep 08 00:26 EDT
+"ReplEval.FullWorkflow" start time: Sep 11 15:07 EDT
 Output:
 ----------------------------------------------------------
 Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
@@ -77,15 +77,15 @@ Note: Google Test filter = ReplEval.FullWorkflow
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"ReplEval.FullWorkflow" end time: Sep 08 00:26 EDT
+"ReplEval.FullWorkflow" end time: Sep 11 15:07 EDT
 "ReplEval.FullWorkflow" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-4/5 Testing: ReplEval.UnknownCommand
-4/5 Test: ReplEval.UnknownCommand
+4/12 Testing: ReplEval.UnknownCommand
+4/12 Test: ReplEval.UnknownCommand
 Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=ReplEval.UnknownCommand" "--gtest_also_run_disabled_tests"
 Directory: /Users/andrewdragoslavic/tinyredis/build
-"ReplEval.UnknownCommand" start time: Sep 08 00:26 EDT
+"ReplEval.UnknownCommand" start time: Sep 11 15:07 EDT
 Output:
 ----------------------------------------------------------
 Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
@@ -104,15 +104,15 @@ Note: Google Test filter = ReplEval.UnknownCommand
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"ReplEval.UnknownCommand" end time: Sep 08 00:26 EDT
+"ReplEval.UnknownCommand" end time: Sep 11 15:07 EDT
 "ReplEval.UnknownCommand" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-5/5 Testing: ReplEval.DelCommand_WrongArgs
-5/5 Test: ReplEval.DelCommand_WrongArgs
+5/12 Testing: ReplEval.DelCommand_WrongArgs
+5/12 Test: ReplEval.DelCommand_WrongArgs
 Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=ReplEval.DelCommand_WrongArgs" "--gtest_also_run_disabled_tests"
 Directory: /Users/andrewdragoslavic/tinyredis/build
-"ReplEval.DelCommand_WrongArgs" start time: Sep 08 00:26 EDT
+"ReplEval.DelCommand_WrongArgs" start time: Sep 11 15:07 EDT
 Output:
 ----------------------------------------------------------
 Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
@@ -131,8 +131,197 @@ Note: Google Test filter = ReplEval.DelCommand_WrongArgs
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"ReplEval.DelCommand_WrongArgs" end time: Sep 08 00:26 EDT
+"ReplEval.DelCommand_WrongArgs" end time: Sep 11 15:07 EDT
 "ReplEval.DelCommand_WrongArgs" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Sep 08 00:26 EDT
+6/12 Testing: KVStoreExpiry.TTL_NoExpiryIsMinus1
+6/12 Test: KVStoreExpiry.TTL_NoExpiryIsMinus1
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=KVStoreExpiry.TTL_NoExpiryIsMinus1" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"KVStoreExpiry.TTL_NoExpiryIsMinus1" start time: Sep 11 15:07 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = KVStoreExpiry.TTL_NoExpiryIsMinus1
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from KVStoreExpiry
+[ RUN      ] KVStoreExpiry.TTL_NoExpiryIsMinus1
+[       OK ] KVStoreExpiry.TTL_NoExpiryIsMinus1 (0 ms)
+[----------] 1 test from KVStoreExpiry (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"KVStoreExpiry.TTL_NoExpiryIsMinus1" end time: Sep 11 15:07 EDT
+"KVStoreExpiry.TTL_NoExpiryIsMinus1" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/12 Testing: KVStoreExpiry.Expire_MissingKeyReturnsZero
+7/12 Test: KVStoreExpiry.Expire_MissingKeyReturnsZero
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=KVStoreExpiry.Expire_MissingKeyReturnsZero" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"KVStoreExpiry.Expire_MissingKeyReturnsZero" start time: Sep 11 15:07 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = KVStoreExpiry.Expire_MissingKeyReturnsZero
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from KVStoreExpiry
+[ RUN      ] KVStoreExpiry.Expire_MissingKeyReturnsZero
+[       OK ] KVStoreExpiry.Expire_MissingKeyReturnsZero (0 ms)
+[----------] 1 test from KVStoreExpiry (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"KVStoreExpiry.Expire_MissingKeyReturnsZero" end time: Sep 11 15:07 EDT
+"KVStoreExpiry.Expire_MissingKeyReturnsZero" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/12 Testing: KVStoreExpiry.Expire_NonPositiveDeletesImmediately
+8/12 Test: KVStoreExpiry.Expire_NonPositiveDeletesImmediately
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=KVStoreExpiry.Expire_NonPositiveDeletesImmediately" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"KVStoreExpiry.Expire_NonPositiveDeletesImmediately" start time: Sep 11 15:07 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = KVStoreExpiry.Expire_NonPositiveDeletesImmediately
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from KVStoreExpiry
+[ RUN      ] KVStoreExpiry.Expire_NonPositiveDeletesImmediately
+[       OK ] KVStoreExpiry.Expire_NonPositiveDeletesImmediately (0 ms)
+[----------] 1 test from KVStoreExpiry (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"KVStoreExpiry.Expire_NonPositiveDeletesImmediately" end time: Sep 11 15:07 EDT
+"KVStoreExpiry.Expire_NonPositiveDeletesImmediately" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/12 Testing: KVStoreExpiry.Set_ClearsOldExpiry
+9/12 Test: KVStoreExpiry.Set_ClearsOldExpiry
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=KVStoreExpiry.Set_ClearsOldExpiry" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"KVStoreExpiry.Set_ClearsOldExpiry" start time: Sep 11 15:07 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = KVStoreExpiry.Set_ClearsOldExpiry
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from KVStoreExpiry
+[ RUN      ] KVStoreExpiry.Set_ClearsOldExpiry
+[       OK ] KVStoreExpiry.Set_ClearsOldExpiry (0 ms)
+[----------] 1 test from KVStoreExpiry (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"KVStoreExpiry.Set_ClearsOldExpiry" end time: Sep 11 15:07 EDT
+"KVStoreExpiry.Set_ClearsOldExpiry" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/12 Testing: KVStoreExpiry.TTL_CountsDownThenMinus2
+10/12 Test: KVStoreExpiry.TTL_CountsDownThenMinus2
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=KVStoreExpiry.TTL_CountsDownThenMinus2" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"KVStoreExpiry.TTL_CountsDownThenMinus2" start time: Sep 11 15:07 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = KVStoreExpiry.TTL_CountsDownThenMinus2
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from KVStoreExpiry
+[ RUN      ] KVStoreExpiry.TTL_CountsDownThenMinus2
+[       OK ] KVStoreExpiry.TTL_CountsDownThenMinus2 (1205 ms)
+[----------] 1 test from KVStoreExpiry (1205 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1205 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   1.21 sec
+----------------------------------------------------------
+Test Passed.
+"KVStoreExpiry.TTL_CountsDownThenMinus2" end time: Sep 11 15:07 EDT
+"KVStoreExpiry.TTL_CountsDownThenMinus2" time elapsed: 00:00:01
+----------------------------------------------------------
+
+11/12 Testing: KVStoreExpiry.Del_RemovesValueAndExpiry
+11/12 Test: KVStoreExpiry.Del_RemovesValueAndExpiry
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=KVStoreExpiry.Del_RemovesValueAndExpiry" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"KVStoreExpiry.Del_RemovesValueAndExpiry" start time: Sep 11 15:07 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = KVStoreExpiry.Del_RemovesValueAndExpiry
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from KVStoreExpiry
+[ RUN      ] KVStoreExpiry.Del_RemovesValueAndExpiry
+[       OK ] KVStoreExpiry.Del_RemovesValueAndExpiry (0 ms)
+[----------] 1 test from KVStoreExpiry (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"KVStoreExpiry.Del_RemovesValueAndExpiry" end time: Sep 11 15:07 EDT
+"KVStoreExpiry.Del_RemovesValueAndExpiry" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/12 Testing: KVStoreExpiry.PurgeOnTouchViaGet
+12/12 Test: KVStoreExpiry.PurgeOnTouchViaGet
+Command: "/Users/andrewdragoslavic/tinyredis/build/kvstore_tests" "--gtest_filter=KVStoreExpiry.PurgeOnTouchViaGet" "--gtest_also_run_disabled_tests"
+Directory: /Users/andrewdragoslavic/tinyredis/build
+"KVStoreExpiry.PurgeOnTouchViaGet" start time: Sep 11 15:07 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250808-4780-aa0gxy/googletest-1.17.0/googletest/src/gtest_main.cc
+Note: Google Test filter = KVStoreExpiry.PurgeOnTouchViaGet
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from KVStoreExpiry
+[ RUN      ] KVStoreExpiry.PurgeOnTouchViaGet
+[       OK ] KVStoreExpiry.PurgeOnTouchViaGet (1205 ms)
+[----------] 1 test from KVStoreExpiry (1205 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1205 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   1.21 sec
+----------------------------------------------------------
+Test Passed.
+"KVStoreExpiry.PurgeOnTouchViaGet" end time: Sep 11 15:07 EDT
+"KVStoreExpiry.PurgeOnTouchViaGet" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Sep 11 15:07 EDT

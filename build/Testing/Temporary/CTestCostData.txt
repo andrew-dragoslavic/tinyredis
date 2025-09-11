@@ -1,6 +1,13 @@
-KVStore.SetGetDelBasics 5 0.00047575
-Repl.ParseLine_BasicWhitespace 3 0.000803375
-ReplEval.FullWorkflow 2 0.00134521
-ReplEval.UnknownCommand 1 0.00225913
-ReplEval.DelCommand_WrongArgs 1 0.00217579
+KVStore.SetGetDelBasics 6 0.000510181
+Repl.ParseLine_BasicWhitespace 4 0.000728073
+ReplEval.FullWorkflow 3 0.00119765
+ReplEval.UnknownCommand 2 0.00132498
+ReplEval.DelCommand_WrongArgs 2 0.00125223
+KVStoreExpiry.TTL_NoExpiryIsMinus1 1 0.00248475
+KVStoreExpiry.Expire_MissingKeyReturnsZero 1 0.00249658
+KVStoreExpiry.Expire_NonPositiveDeletesImmediately 1 0.00227754
+KVStoreExpiry.Set_ClearsOldExpiry 1 0.00302096
+KVStoreExpiry.TTL_CountsDownThenMinus2 1 1.20824
+KVStoreExpiry.Del_RemovesValueAndExpiry 1 0.00449725
+KVStoreExpiry.PurgeOnTouchViaGet 1 1.20976
 ---

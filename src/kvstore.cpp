@@ -65,11 +65,18 @@ namespace tr
 
     void KVStore::set(const std::string &key, const std::string &value)
     {
+        purge_if_expired(key);
         memory[key] = value;
+        auto it = expiry.find(key);
+        if (it != expiry.end())
+        {
+            expiry.erase(it);
+        }
     }
 
     std::optional<std::string> KVStore::get(const std::string &key)
     {
+        purge_if_expired(key);
         auto it = memory.find(key);
         if (it != memory.end())
         {
@@ -79,11 +86,13 @@ namespace tr
     }
     bool KVStore::del(const std::string &key)
     {
+        purge_if_expired(key);
         auto it = memory.find(key);
         if (it != memory.end())
         {
-            memory.erase(key);
-            return true;
+            bool removed = memory.erase(key) > 0;
+            expiry.erase(key);
+            return removed;
         }
         return false;
     }

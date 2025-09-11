@@ -80,6 +80,30 @@ namespace tr
                 return std::to_string(static_cast<int>(res));
             }
         }
+        else if (cmd == "expire")
+        {
+            if (args.size() != 3)
+            {
+                return "(error) ERR wrong number of arguments for 'expire'";
+            }
+            else
+            {
+                bool res = db.expire(args[1], std::stoll(args[2]));
+                return std::to_string(res);
+            }
+        }
+        else if (cmd == "ttl")
+        {
+            if (args.size() != 2)
+            {
+                return "(error) ERR wrong number of arguments for 'ttl'";
+            }
+            else
+            {
+                long long res = db.ttl(args[1]);
+                return std::to_string(res);
+            }
+        }
         else
         {
             return "(error) ERR unknown command '" + cmd + "'";
