@@ -84,6 +84,7 @@ namespace tr
         }
         return std::nullopt;
     }
+
     bool KVStore::del(const std::string &key)
     {
         purge_if_expired(key);
@@ -95,5 +96,40 @@ namespace tr
             return removed;
         }
         return false;
+    }
+
+    std::optional<long long> KVStore::incrby(const std::string &key, long long delta)
+    {
+        purge_if_expired(key);
+        auto it = memory.find(key);
+        long long current;
+        std::size_t pos = 0;
+        if (it != memory.end())
+        {
+            try
+            {
+                const std::string &s = it->second;
+                current = std::stoll(s, &pos);
+                if (s.size() != pos)
+                {
+                    return std::nullopt;
+                }
+            }
+            catch (const std::exception &)
+            {
+                return std::nullopt;
+            }
+        }
+        else
+        {
+            current = 0;
+        }
+        if (delta > 0 && current > LLONG_MAX - delta)
+            return std::nullopt;
+        if (delta < 0 && current < LLONG_MIN - delta)
+            return std::nullopt;
+        long long next = current + delta;
+        memory[key] = std::to_string(next);
+        return next;
     }
 }

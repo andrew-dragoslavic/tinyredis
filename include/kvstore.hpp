@@ -20,6 +20,8 @@ namespace tr
 
         bool del(const std::string &key);
 
+        std::optional<long long> incrby(const std::string &key, long long delta);
+
     private:
         std::unordered_map<std::string, std::string> memory;
 
