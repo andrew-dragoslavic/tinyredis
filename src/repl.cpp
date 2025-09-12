@@ -49,6 +49,53 @@ namespace tr
         }
         if (pos != len_str.size() || n < 0)
             return RespParseStatus::Error;
+
+        std::size_t cursor = crlf + 2;
+
+        for (long long i; i < n; ++i)
+        {
+            if (cursor > in.size())
+                return RespParseStatus::NeedMore;
+
+            if (in[cursor] != '$')
+                return RespParseStatus::Error;
+
+            std::size_t crlf2 = in.find("\r\n", cursor + 1);
+            if (crlf == std::string::npos)
+                return RespParseStatus::NeedMore;
+
+            const std::string len2_str = in.substr(cursor + 1, crlf2 - (cursor + 1));
+            std::size_t pos2 = 0;
+            long long len = 0;
+            try
+            {
+                len = std::stoll(len2_str, &pos2, 10);
+            }
+            catch (...)
+            {
+                return RespParseStatus::Error;
+            }
+            if (pos2 != len2_str.size() || len < 0)
+                return RespParseStatus::Error;
+
+            std::size_t data_start = crlf2 + 2;
+            std::size_t need = data_start + static_cast<std::size_t>(len) + 2;
+            if (in.size() < need)
+                return RespParseStatus::NeedMore;
+
+            // 6) Slice out the argument bytes
+            out.emplace_back(in.substr(data_start, static_cast<std::size_t>(len)));
+
+            // 7) Verify trailing "\r\n"
+            std::size_t data_end = data_start + static_cast<std::size_t>(len);
+            if (in[data_end] != '\r' || in[data_end + 1] != '\n')
+                return RespParseStatus::Error;
+
+            // 8) Advance cursor to the next element
+            cursor = data_end + 2;
+        }
+        consumed = cursor;
+        return RespParseStatus::Ok;
     }
 
     std::string eval_command(KVStore &db, const std::vector<std::string> &args)
