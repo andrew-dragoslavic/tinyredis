@@ -7,6 +7,7 @@
 #include <cerrno>
 #include <cstring>
 #include <csignal>
+#include <algorithm>
 
 namespace tr
 {
@@ -50,6 +51,50 @@ namespace tr
         return true;
     }
 
+    static bool write_simple(int fd, std::string_view s)
+    {
+        std::string out;
+        out.reserve(1 + s.size() + 2);
+        out.push_back('+');
+        out.append(s);
+        out.append("\r\n");
+        return write_all(fd, out);
+    }
+
+    static bool write_error(int fd, std::string_view s)
+    {
+        std::string out;
+        out.reserve(1 + 4 + s.size() + 2);
+        out.push_back('-');
+        out.append("ERR ");
+        out.append(s);
+        out.append("\r\n");
+        return write_all(fd, out);
+    }
+
+    static bool write_integer(int fd, long long n)
+    {
+        std::string out = ":" + std::to_string(n) + "\r\n";
+        return write_all(fd, out);
+    }
+
+    static bool write_bulk(int fd, std::string_view s)
+    {
+        std::string out;
+        out.reserve(1 + 20 + 2 + s.size() + 2);
+        out.push_back('$');
+        out.append(std::to_string(s.size()));
+        out.append("\r\n");
+        out.append(s);
+        out.append("\r\n");
+        return write_all(fd, out);
+    }
+
+    static bool write_null_bulk(int fd)
+    {
+        return write_all(fd, std::string("$-1\r\n"));
+    }
+
     void handle_client(int client_fd, KVStore &db)
     {
         std::string inbuf;
@@ -87,15 +132,212 @@ namespace tr
                         if (args.empty())
                             continue;
 
-                        // Evaluate and reply (still plain text for now; RESP replies next)
-                        std::string result = tr::eval_command(db, args);
-                        if (!result.empty())
+                        // lowercase the command like you already do elsewhere
+                        std::string cmd = args[0];
+                        std::transform(cmd.begin(), cmd.end(), cmd.begin(),
+                                       [](unsigned char c)
+                                       { return static_cast<char>(std::tolower(c)); });
+
+                        // 1) PING -> +PONG\r\n
+                        if (cmd == "ping")
                         {
-                            if (!write_all(client_fd, result + "\n"))
+                            if (args.size() == 1)
+                            {
+                                if (!write_simple(client_fd, "PONG"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                if (!write_error(client_fd, "ERR wrong number of arguments for 'ping'"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                            }
+                            continue; // parse next frame if any
+                        }
+
+                        // 2) GET key -> $len\r\nvalue\r\n  or  $-1\r\n
+                        if (cmd == "get")
+                        {
+                            if (args.size() != 2)
+                            {
+                                if (!write_error(client_fd, "ERR wrong number of arguments for 'get'"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                                continue;
+                            }
+                            auto v = db.get(args[1]);
+                            if (v)
+                            {
+                                if (!write_bulk(client_fd, *v))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                if (!write_null_bulk(client_fd))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                            }
+                            continue;
+                        }
+
+                        // 3) SET key value -> +OK\r\n
+                        if (cmd == "set")
+                        {
+                            if (args.size() != 3)
+                            {
+                                if (!write_error(client_fd, "wrong number of arguments for 'set'"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                                continue;
+                            }
+                            db.set(args[1], args[2]);
+                            if (!write_simple(client_fd, "OK"))
                             {
                                 ::close(client_fd);
                                 return;
                             }
+                            continue;
+                        }
+
+                        // 4) DEL key -> :1\r\n or :0\r\n
+                        if (cmd == "del")
+                        {
+                            if (args.size() != 2)
+                            {
+                                if (!write_error(client_fd, "wrong number of arguments for 'del'"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                                continue;
+                            }
+                            bool deleted = db.del(args[1]);
+                            if (!write_integer(client_fd, deleted ? 1 : 0))
+                            {
+                                ::close(client_fd);
+                                return;
+                            }
+                            continue;
+                        }
+
+                        // 5) EXPIRE key seconds -> :1\r\n or :0\r\n
+                        if (cmd == "expire")
+                        {
+                            if (args.size() != 3)
+                            {
+                                if (!write_error(client_fd, "wrong number of arguments for 'expire'"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                                continue;
+                            }
+                            try
+                            {
+                                long long seconds = std::stoll(args[2]);
+                                bool result = db.expire(args[1], seconds);
+                                if (!write_integer(client_fd, result ? 1 : 0))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                            }
+                            catch (const std::exception &)
+                            {
+                                if (!write_error(client_fd, "value is not an integer or out of range"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                            }
+                            continue;
+                        }
+
+                        // 6) TTL key -> :-1\r\n or :-2\r\n or :seconds\r\n
+                        if (cmd == "ttl")
+                        {
+                            if (args.size() != 2)
+                            {
+                                if (!write_error(client_fd, "wrong number of arguments for 'ttl'"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                                continue;
+                            }
+                            long long ttl = db.ttl(args[1]);
+                            if (!write_integer(client_fd, ttl))
+                            {
+                                ::close(client_fd);
+                                return;
+                            }
+                            continue;
+                        }
+
+                        // 7) INCRBY key increment -> :newvalue\r\n
+                        if (cmd == "incrby")
+                        {
+                            if (args.size() != 3)
+                            {
+                                if (!write_error(client_fd, "wrong number of arguments for 'incrby'"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                                continue;
+                            }
+                            try
+                            {
+                                long long delta = std::stoll(args[2]);
+                                auto result = db.incrby(args[1], delta);
+                                if (result)
+                                {
+                                    if (!write_integer(client_fd, *result))
+                                    {
+                                        ::close(client_fd);
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!write_error(client_fd, "value is not an integer or out of range"))
+                                    {
+                                        ::close(client_fd);
+                                        return;
+                                    }
+                                }
+                            }
+                            catch (const std::exception &)
+                            {
+                                if (!write_error(client_fd, "value is not an integer or out of range"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                            }
+                            continue;
+                        }
+
+                        // ...add SET/EXPIRE/TTL/INCR/etc. similarly, using write_simple / write_integer / write_error...
+                        // Unknown command:
+                        if (!write_error(client_fd, std::string("ERR unknown command '") + args[0] + "'"))
+                        {
+                            ::close(client_fd);
+                            return;
                         }
                         continue;
                     }
