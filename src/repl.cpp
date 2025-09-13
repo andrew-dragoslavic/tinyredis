@@ -54,14 +54,14 @@ namespace tr
 
         for (long long i = 0; i < n; ++i)
         {
-            if (cursor > in.size())
+            if (cursor >= in.size())
                 return RespParseStatus::NeedMore;
 
             if (in[cursor] != '$')
                 return RespParseStatus::Error;
 
             std::size_t crlf2 = in.find("\r\n", cursor + 1);
-            if (crlf == std::string::npos)
+            if (crlf2 == std::string::npos)
                 return RespParseStatus::NeedMore;
 
             const std::string len2_str = in.substr(cursor + 1, crlf2 - (cursor + 1));
@@ -84,12 +84,13 @@ namespace tr
                 return RespParseStatus::NeedMore;
 
             // 6) Slice out the argument bytes
-            out.emplace_back(in.substr(data_start, static_cast<std::size_t>(len)));
 
             // 7) Verify trailing "\r\n"
             std::size_t data_end = data_start + static_cast<std::size_t>(len);
             if (in[data_end] != '\r' || in[data_end + 1] != '\n')
                 return RespParseStatus::Error;
+
+            out.emplace_back(in.substr(data_start, static_cast<std::size_t>(len)));
 
             // 8) Advance cursor to the next element
             cursor = data_end + 2;

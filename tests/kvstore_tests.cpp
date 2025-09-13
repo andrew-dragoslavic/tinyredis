@@ -140,3 +140,169 @@ TEST(KVStoreExpiry, PurgeOnTouchViaGet)
     EXPECT_FALSE(db.get("k").has_value()); // get triggers purge
     EXPECT_EQ(db.ttl("k"), -2);
 }
+
+// RESP array parsing tests
+
+TEST(RespParse, Ok_SimplePing)
+{
+    std::string in = "*1\r\n$4\r\nPING\r\n";
+    std::size_t consumed = 999;
+    std::vector<std::string> out = {"pre"};
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::Ok);
+    ASSERT_EQ(out.size(), 1u);
+    EXPECT_EQ(out[0], "PING");
+    EXPECT_EQ(consumed, in.size());
+}
+
+TEST(RespParse, Ok_GetKey)
+{
+    std::string in = "*2\r\n$3\r\nGET\r\n$3\r\nkey\r\n";
+    std::size_t consumed = 999;
+    std::vector<std::string> out;
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::Ok);
+    ASSERT_EQ(out.size(), 2u);
+    EXPECT_EQ(out[0], "GET");
+    EXPECT_EQ(out[1], "key");
+    EXPECT_EQ(consumed, in.size());
+}
+
+TEST(RespParse, Ok_ZeroLengthBulk)
+{
+    std::string in = "*1\r\n$0\r\n\r\n";
+    std::size_t consumed = 999;
+    std::vector<std::string> out;
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::Ok);
+    ASSERT_EQ(out.size(), 1u);
+    EXPECT_EQ(out[0], "");
+    EXPECT_EQ(consumed, in.size());
+}
+
+TEST(RespParse, Ok_EmptyArray)
+{
+    std::string in = "*0\r\n";
+    std::size_t consumed = 999;
+    std::vector<std::string> out = {"x"};
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::Ok);
+    EXPECT_TRUE(out.empty());
+    EXPECT_EQ(consumed, in.size());
+}
+
+TEST(RespParse, NeedMore_HeaderOnly)
+{
+    std::string in = "*2\r\n";
+    std::size_t consumed = 123;
+    std::vector<std::string> out = {"x"};
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::NeedMore);
+    EXPECT_TRUE(out.empty());
+    EXPECT_EQ(consumed, 0u);
+}
+
+TEST(RespParse, NeedMore_PartialBulkLenLine)
+{
+    std::string in = "*1\r\n$4";
+    std::size_t consumed = 123;
+    std::vector<std::string> out = {"x"};
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::NeedMore);
+    EXPECT_TRUE(out.empty());
+    EXPECT_EQ(consumed, 0u);
+}
+
+TEST(RespParse, NeedMore_PartialBulkData)
+{
+    std::string in = "*1\r\n$4\r\nPI";
+    std::size_t consumed = 123;
+    std::vector<std::string> out;
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::NeedMore);
+    EXPECT_TRUE(out.empty());
+    EXPECT_EQ(consumed, 0u);
+}
+
+TEST(RespParse, Error_NotArrayPrefix)
+{
+    std::string in = "$3\r\nGET\r\n";
+    std::size_t consumed = 123;
+    std::vector<std::string> out = {"x"};
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::Error);
+    EXPECT_TRUE(out.empty());
+    EXPECT_EQ(consumed, 0u);
+}
+
+TEST(RespParse, Error_NegativeArrayLen)
+{
+    std::string in = "*-1\r\n";
+    std::size_t consumed = 123;
+    std::vector<std::string> out;
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::Error);
+    EXPECT_TRUE(out.empty());
+    EXPECT_EQ(consumed, 0u);
+}
+
+TEST(RespParse, Error_NonNumericBulkLen)
+{
+    std::string in = "*1\r\n$X\r\n";
+    std::size_t consumed = 123;
+    std::vector<std::string> out;
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::Error);
+    EXPECT_TRUE(out.empty());
+    EXPECT_EQ(consumed, 0u);
+}
+
+TEST(RespParse, Error_BadTrailingCRLF_AfterData)
+{
+    // Has enough bytes, but the two bytes after data are not \r\n
+    std::string in = "*1\r\n$4\r\nPINGxx";
+    std::size_t consumed = 123;
+    std::vector<std::string> out;
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::Error);
+    EXPECT_TRUE(out.empty());
+    EXPECT_EQ(consumed, 0u);
+}
+
+TEST(RespParse, Pipeline_TwoArrays)
+{
+    std::string first = "*1\r\n$4\r\nPING\r\n";
+    std::string second = "*2\r\n$3\r\nGET\r\n$3\r\nkey\r\n";
+    std::string in = first + second;
+
+    std::size_t consumed = 0;
+    std::vector<std::string> out;
+    auto st = tr::parse_resp_array(in, consumed, out);
+
+    EXPECT_EQ(st, tr::RespParseStatus::Ok);
+    ASSERT_EQ(out.size(), 1u);
+    EXPECT_EQ(out[0], "PING");
+    EXPECT_EQ(consumed, first.size());
+
+    // Parse the second frame
+    std::size_t consumed2 = 0;
+    std::vector<std::string> out2;
+    auto st2 = tr::parse_resp_array(in.substr(consumed), consumed2, out2);
+
+    EXPECT_EQ(st2, tr::RespParseStatus::Ok);
+    ASSERT_EQ(out2.size(), 2u);
+    EXPECT_EQ(out2[0], "GET");
+    EXPECT_EQ(out2[1], "key");
+    EXPECT_EQ(consumed2, second.size());
+}
