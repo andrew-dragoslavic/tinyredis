@@ -52,7 +52,7 @@ namespace tr
 
         std::size_t cursor = crlf + 2;
 
-        for (long long i; i < n; ++i)
+        for (long long i = 0; i < n; ++i)
         {
             if (cursor > in.size())
                 return RespParseStatus::NeedMore;

@@ -63,6 +63,43 @@ namespace tr
                 inbuf.append(buf, n);
                 for (;;)
                 {
+                    if (inbuf.empty())
+                        break;
+
+                    if (inbuf[0] == '*')
+                    {
+                        std::size_t consumed = 0;
+                        std::vector<std::string> args;
+                        auto st = tr::parse_resp_array(inbuf, consumed, args);
+
+                        if (st == tr::RespParseStatus::NeedMore)
+                        {
+                            break; // wait for more bytes from ::read
+                        }
+                        if (st == tr::RespParseStatus::Error)
+                        {
+                            ::close(client_fd);
+                            return;
+                        }
+
+                        // Ok
+                        inbuf.erase(0, consumed);
+                        if (args.empty())
+                            continue;
+
+                        // Evaluate and reply (still plain text for now; RESP replies next)
+                        std::string result = tr::eval_command(db, args);
+                        if (!result.empty())
+                        {
+                            if (!write_all(client_fd, result + "\n"))
+                            {
+                                ::close(client_fd);
+                                return;
+                            }
+                        }
+                        continue;
+                    }
+
                     std::size_t lf = inbuf.find('\n');
                     if (lf == std::string::npos)
                         break;
