@@ -151,7 +151,7 @@ namespace tr
                             }
                             else
                             {
-                                if (!write_error(client_fd, "ERR wrong number of arguments for 'ping'"))
+                                if (!write_error(client_fd, "wrong number of arguments for 'ping'"))
                                 {
                                     ::close(client_fd);
                                     return;
@@ -165,7 +165,7 @@ namespace tr
                         {
                             if (args.size() != 2)
                             {
-                                if (!write_error(client_fd, "ERR wrong number of arguments for 'get'"))
+                                if (!write_error(client_fd, "wrong number of arguments for 'get'"))
                                 {
                                     ::close(client_fd);
                                     return;
@@ -331,10 +331,52 @@ namespace tr
                             }
                             continue;
                         }
+                        if (cmd == "incrby")
+                        {
+                            if (args.size() != 3)
+                            {
+                                if (!write_error(client_fd, "wrong number of arguments for 'decrby'"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                                continue;
+                            }
+                            try
+                            {
+                                long long delta = -std::stoll(args[2]);
+                                auto result = db.incrby(args[1], delta);
+                                if (result)
+                                {
+                                    if (!write_integer(client_fd, *result))
+                                    {
+                                        ::close(client_fd);
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!write_error(client_fd, "value is not an integer or out of range"))
+                                    {
+                                        ::close(client_fd);
+                                        return;
+                                    }
+                                }
+                            }
+                            catch (const std::exception &)
+                            {
+                                if (!write_error(client_fd, "value is not an integer or out of range"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                            }
+                            continue;
+                        }
 
                         // ...add SET/EXPIRE/TTL/INCR/etc. similarly, using write_simple / write_integer / write_error...
                         // Unknown command:
-                        if (!write_error(client_fd, std::string("ERR unknown command '") + args[0] + "'"))
+                        if (!write_error(client_fd, std::string("unknown command '") + args[0] + "'"))
                         {
                             ::close(client_fd);
                             return;
