@@ -216,7 +216,7 @@ namespace tr
                         // 4) DEL key -> :1\r\n or :0\r\n
                         if (cmd == "del")
                         {
-                            if (args.size() != 2)
+                            if (args.size() < 2)
                             {
                                 if (!write_error(client_fd, "wrong number of arguments for 'del'"))
                                 {
@@ -225,8 +225,13 @@ namespace tr
                                 }
                                 continue;
                             }
-                            bool deleted = db.del(args[1]);
-                            if (!write_integer(client_fd, deleted ? 1 : 0))
+                            int total = 0;
+
+                            for (size_t i = 1; i < args.size(); ++i)
+                            {
+                                total += db.del(args[i]) ? 1 : 0;
+                            }
+                            if (!write_integer(client_fd, total))
                             {
                                 ::close(client_fd);
                                 return;

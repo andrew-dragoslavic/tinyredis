@@ -151,14 +151,20 @@ namespace tr
         }
         else if (cmd == "del")
         {
-            if (args.size() != 2)
+            if (args.size() < 2)
             {
                 return "(error) ERR wrong number of arguments for 'del'";
             }
             else
             {
-                bool res = db.del(args[1]);
-                return std::to_string(static_cast<int>(res));
+                int total = 0;
+
+                for (size_t i = 1; i < args.size(); ++i)
+                {
+                    total += db.del(args[i]) ? 1 : 0;
+                }
+
+                return std::to_string(total);
             }
         }
         else if (cmd == "expire")
