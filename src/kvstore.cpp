@@ -132,4 +132,19 @@ namespace tr
         memory[key] = std::to_string(next);
         return next;
     }
+
+    int KVStore::exists(const std::vector<std::string> &keys)
+    {
+        int count = 0;
+        for (const auto &key : keys)
+        {
+            purge_if_expired(key);
+            auto it = memory.find(key);
+            if (it != memory.end())
+            {
+                count++;
+            }
+        }
+        return count;
+    }
 }

@@ -2,6 +2,7 @@
 #include <sstream>
 #include <algorithm>
 #include <cctype>
+#include <span>
 
 namespace tr
 {
@@ -238,6 +239,21 @@ namespace tr
                 {
                     return "(error) ERR value is not an integer or out of range";
                 }
+            }
+        }
+        else if (cmd == "exists")
+        {
+            if (args.size() < 2)
+            {
+                return "(error) ERR wrong number of arguments for 'exists'";
+            }
+            else
+            {
+                std::vector<std::string> keys(args.begin() + 1, args.end());
+
+                int res = db.exists(keys);
+
+                return std::to_string(res);
             }
         }
         else

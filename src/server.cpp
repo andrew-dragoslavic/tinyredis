@@ -331,7 +331,7 @@ namespace tr
                             }
                             continue;
                         }
-                        if (cmd == "incrby")
+                        if (cmd == "decrby")
                         {
                             if (args.size() != 3)
                             {
@@ -349,6 +349,49 @@ namespace tr
                                 if (result)
                                 {
                                     if (!write_integer(client_fd, *result))
+                                    {
+                                        ::close(client_fd);
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!write_error(client_fd, "value is not an integer or out of range"))
+                                    {
+                                        ::close(client_fd);
+                                        return;
+                                    }
+                                }
+                            }
+                            catch (const std::exception &)
+                            {
+                                if (!write_error(client_fd, "value is not an integer or out of range"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                            }
+                            continue;
+                        }
+                        if (cmd == "exists")
+                        {
+                            if (args.size() < 2)
+                            {
+                                if (!write_error(client_fd, "wrong number of arguments for 'exists'"))
+                                {
+                                    ::close(client_fd);
+                                    return;
+                                }
+                                continue;
+                            }
+                            try
+                            {
+                                std::vector<std::string> keys(args.begin() + 1, args.end());
+
+                                int result = db.exists(keys);
+                                if (result >= 0)
+                                {
+                                    if (!write_integer(client_fd, result))
                                     {
                                         ::close(client_fd);
                                         return;

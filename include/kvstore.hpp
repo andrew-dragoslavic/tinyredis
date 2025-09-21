@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <optional>
 #include <chrono>
+#include <vector>
 // using namespace std;
 
 namespace tr
@@ -21,6 +22,8 @@ namespace tr
         bool del(const std::string &key);
 
         std::optional<long long> incrby(const std::string &key, long long delta);
+
+        int exists(const std::vector<std::string> &keys);
 
     private:
         std::unordered_map<std::string, std::string> memory;
