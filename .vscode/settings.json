@@ -46,7 +46,8 @@
     "streambuf": "cpp",
     "vector": "cpp",
     "algorithm": "cpp",
-    "source_location": "cpp"
+    "source_location": "cpp",
+    "iostream": "cpp"
   },
   "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
   "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json"

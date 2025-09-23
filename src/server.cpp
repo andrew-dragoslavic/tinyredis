@@ -514,9 +514,15 @@ namespace tr
         }
         std::cout << "reuseaddr set" << "\n";
         sockaddr_in addr{};
-        addr.sin_family = AF_INET;                                                     // Use IPv4
-        addr.sin_port = htons(port);                                                   // Make sure to be using big endian
-        int ok = ::inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr);                    // Parse and convert IP into binary form for OS
+        addr.sin_family = AF_INET;   // Use IPv4
+        addr.sin_port = htons(port); // Make sure to be using big endian
+        int ok = ::inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr);
+        if (ok <= 0)
+        {
+            std::cout << std::strerror(errno) << "\n";
+            ::close(listen_fd);
+            return 1;
+        } // Parse and convert IP into binary form for OS
         int rc = ::bind(listen_fd, reinterpret_cast<sockaddr *>(&addr), sizeof(addr)); // Claims the IP and port for the socket
         if (rc < 0)
         {
@@ -543,7 +549,7 @@ namespace tr
                 }
                 else
                 {
-                    std::cout << "accept() failed: ...\n";
+                    std::cout << "accept() failed: " << std::strerror(errno) << "\n";
                     continue;
                 }
             }

@@ -175,8 +175,15 @@ namespace tr
             }
             else
             {
-                bool res = db.expire(args[1], std::stoll(args[2]));
-                return std::to_string(res);
+                try
+                {
+                    bool res = db.expire(args[1], std::stoll(args[2]));
+                    return std::to_string(res);
+                }
+                catch (...)
+                {
+                    return "(error) ERR value is not an integer or out of range";
+                }
             }
         }
         else if (cmd == "ttl")
